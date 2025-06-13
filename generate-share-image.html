@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Share Image</title>
+</head>
+<body>
+    <canvas id="canvas" width="1200" height="630"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Background gradient
+        const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
+        gradient.addColorStop(0, '#0a0a0a');
+        gradient.addColorStop(1, '#2a2a2a');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 1200, 630);
+        
+        // Draw Tetris blocks pattern
+        const colors = ['#00FFFF', '#0000FF', '#FFA500', '#FFFF00', '#00FF00', '#FF00FF', '#FF0000'];
+        const blockSize = 40;
+        
+        // Random blocks in background
+        for (let i = 0; i < 30; i++) {
+            const x = Math.random() * 1200;
+            const y = Math.random() * 630;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            ctx.fillStyle = color;
+            ctx.globalAlpha = 0.3;
+            ctx.fillRect(x, y, blockSize, blockSize);
+            ctx.strokeStyle = '#000';
+            ctx.strokeRect(x, y, blockSize, blockSize);
+        }
+        
+        ctx.globalAlpha = 1;
+        
+        // Title
+        ctx.fillStyle = '#00FFFF';
+        ctx.font = 'bold 80px Arial';
+        ctx.textAlign = 'center';
+        ctx.shadowColor = '#000';
+        ctx.shadowBlur = 10;
+        ctx.fillText('TETRIS GAME', 600, 200);
+        
+        // Subtitle
+        ctx.font = '40px Arial';
+        ctx.fillStyle = '#FFF';
+        ctx.fillText('Challenge Your Skills!', 600, 280);
+        
+        // Features
+        ctx.font = '30px Arial';
+        ctx.fillStyle = '#AAA';
+        ctx.fillText('• 7-Bag Randomizer', 600, 360);
+        ctx.fillText('• SRS Rotation System', 600, 410);
+        ctx.fillText('• T-Spin Detection', 600, 460);
+        ctx.fillText('• Hold & Ghost Pieces', 600, 510);
+        
+        // Call to action
+        ctx.font = 'bold 35px Arial';
+        ctx.fillStyle = '#00FF00';
+        ctx.fillText('Play Now!', 600, 580);
+        
+        // Convert to image
+        canvas.toBlob((blob) => {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'share-image.png';
+            a.click();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris Game - 도전하세요!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #0a0a0a;
+            color: white;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid #00ffff;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            color: #00ffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: #aaa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+        }
+        
+        .play-button {
+            display: inline-block;
+            background-color: #00ffff;
+            color: #000;
+            padding: 1rem 3rem;
+            font-size: 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin: 2rem 0;
+        }
+        
+        .play-button:hover {
+            background-color: #00cccc;
+            transform: scale(1.05);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-card {
+            background-color: #1a1a1a;
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid #333;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #00ffff;
+        }
+        
+        .feature-card h3 {
+            color: #00ffff;
+            margin-bottom: 1rem;
+        }
+        
+        .screenshot {
+            background-color: #1a1a1a;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+        
+        .screenshot h2 {
+            color: #00ffff;
+            margin-bottom: 2rem;
+        }
+        
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .screenshot-item {
+            background-color: #2a2a2a;
+            padding: 1rem;
+            border-radius: 5px;
+            border: 1px solid #444;
+        }
+        
+        .screenshot-item h4 {
+            color: #aaa;
+            margin-top: 1rem;
+        }
+        
+        .controls-section {
+            background-color: #1a1a1a;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 3rem 0;
+        }
+        
+        .controls-section h2 {
+            color: #00ffff;
+            margin-bottom: 1.5rem;
+        }
+        
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .control-item {
+            background-color: #2a2a2a;
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .key {
+            display: inline-block;
+            background-color: #444;
+            color: #00ffff;
+            padding: 0.5rem 1rem;
+            border-radius: 3px;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #333;
+            color: #666;
+        }
+        
+        .tetris-animation {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin: 0 2px;
+            animation: fall 2s infinite;
+        }
+        
+        @keyframes fall {
+            0% { transform: translateY(-20px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(20px); opacity: 0; }
+        }
+        
+        .tetris-animation:nth-child(1) { background: #00FFFF; animation-delay: 0s; }
+        .tetris-animation:nth-child(2) { background: #0000FF; animation-delay: 0.2s; }
+        .tetris-animation:nth-child(3) { background: #FFA500; animation-delay: 0.4s; }
+        .tetris-animation:nth-child(4) { background: #FFFF00; animation-delay: 0.6s; }
+        .tetris-animation:nth-child(5) { background: #00FF00; animation-delay: 0.8s; }
+        .tetris-animation:nth-child(6) { background: #FF00FF; animation-delay: 1s; }
+        .tetris-animation:nth-child(7) { background: #FF0000; animation-delay: 1.2s; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>TETRIS GAME</h1>
+        <p class="subtitle">클래식 게임의 현대적 재해석</p>
+        <div>
+            <span class="tetris-animation"></span>
+            <span class="tetris-animation"></span>
+            <span class="tetris-animation"></span>
+            <span class="tetris-animation"></span>
+            <span class="tetris-animation"></span>
+            <span class="tetris-animation"></span>
+            <span class="tetris-animation"></span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="hero">
+            <h2>지금 바로 플레이하세요!</h2>
+            <p>전설적인 퍼즐 게임 테트리스를 웹 브라우저에서 즐기세요.</p>
+            <a href="tetris.html" class="play-button">게임 시작</a>
+        </section>
+        
+        <section class="features">
+            <div class="feature-card">
+                <h3>7-Bag 랜덤 시스템</h3>
+                <p>7개의 블록이 한 세트로 나와 더욱 공정하고 전략적인 플레이가 가능합니다. 같은 블록이 연속으로 나오지 않아 균형잡힌 게임을 즐길 수 있습니다.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>SRS 회전 시스템</h3>
+                <p>Super Rotation System을 적용하여 벽 차기(Wall Kick) 기능을 지원합니다. 더욱 다양한 회전 동작이 가능해 고급 테크닉을 구사할 수 있습니다.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>T-Spin 판정</h3>
+                <p>T-Spin을 성공하면 추가 점수를 획득합니다. 고급 플레이어를 위한 도전적인 기능으로 더 높은 점수에 도전하세요.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>홀드 시스템</h3>
+                <p>현재 블록을 저장하고 나중에 사용할 수 있습니다. 전략적인 플레이를 위한 필수 기능입니다.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>고스트 피스</h3>
+                <p>블록이 떨어질 위치를 미리 보여주어 정확한 배치가 가능합니다. 빠른 플레이에서도 실수를 줄일 수 있습니다.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>콤보 시스템</h3>
+                <p>연속으로 라인을 클리어하면 콤보 보너스를 받습니다. 연속 클리어로 높은 점수에 도전하세요!</p>
+            </div>
+        </section>
+        
+        <section class="screenshot">
+            <h2>게임 화면</h2>
+            <div class="screenshot-grid">
+                <div class="screenshot-item">
+                    <div style="background: #000; height: 200px; display: flex; align-items: center; justify-content: center; color: #00ffff;">
+                        <div>게임 플레이 화면</div>
+                    </div>
+                    <h4>메인 게임 보드</h4>
+                </div>
+                <div class="screenshot-item">
+                    <div style="background: #000; height: 200px; display: flex; align-items: center; justify-content: center; color: #ff00ff;">
+                        <div>HOLD & NEXT</div>
+                    </div>
+                    <h4>홀드 & 다음 블록</h4>
+                </div>
+                <div class="screenshot-item">
+                    <div style="background: #000; height: 200px; display: flex; align-items: center; justify-content: center; color: #ffff00;">
+                        <div>점수 & 통계</div>
+                    </div>
+                    <h4>게임 통계</h4>
+                </div>
+            </div>
+        </section>
+        
+        <section class="controls-section">
+            <h2>조작법</h2>
+            <div class="controls-grid">
+                <div class="control-item">
+                    <div class="key">← →</div>
+                    <p>좌우 이동</p>
+                </div>
+                <div class="control-item">
+                    <div class="key">↓</div>
+                    <p>소프트 드롭</p>
+                </div>
+                <div class="control-item">
+                    <div class="key">↑</div>
+                    <p>회전</p>
+                </div>
+                <div class="control-item">
+                    <div class="key">Space</div>
+                    <p>하드 드롭</p>
+                </div>
+                <div class="control-item">
+                    <div class="key">C</div>
+                    <p>홀드</p>
+                </div>
+            </div>
+        </section>
+        
+        <section style="text-align: center; margin: 3rem 0;">
+            <h2 style="color: #00ffff; margin-bottom: 1rem;">준비되셨나요?</h2>
+            <p style="margin-bottom: 2rem;">클래식 테트리스의 재미를 현대적인 기능과 함께 즐겨보세요!</p>
+            <a href="tetris.html" class="play-button">지금 플레이하기</a>
+        </section>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Tetris Game. 모든 권리 보유.</p>
+    </footer>
+</body>
+</html>

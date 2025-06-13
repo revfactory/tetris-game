@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="side-panel left">
+            <div class="hold-container">
+                <h3>HOLD</h3>
+                <canvas id="holdCanvas" width="80" height="80"></canvas>
+            </div>
+            <div class="stats">
+                <div>
+                    <h3>SCORE</h3>
+                    <div id="score">0</div>
+                </div>
+                <div>
+                    <h3>LINES</h3>
+                    <div id="lines">0</div>
+                </div>
+                <div>
+                    <h3>LEVEL</h3>
+                    <div id="level">1</div>
+                </div>
+                <div>
+                    <h3>COMBO</h3>
+                    <div id="combo">0</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-board">
+            <canvas id="gameCanvas" width="300" height="600"></canvas>
+            <div id="gameOver" class="game-over">
+                <h2>GAME OVER</h2>
+                <p>Score: <span id="finalScore">0</span></p>
+                <button onclick="resetGame()">Play Again</button>
+                <button onclick="shareToKakao()">Share to KakaoTalk</button>
+            </div>
+        </div>
+        
+        <div class="side-panel right">
+            <div class="next-container">
+                <h3>NEXT</h3>
+                <canvas id="nextCanvas" width="80" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <p>← → : Move | ↓ : Soft Drop | ↑ : Rotate | Space : Hard Drop | C : Hold</p>
+    </div>
+    
+    <script src="tetris.js"></script>
+</body>
+</html>
